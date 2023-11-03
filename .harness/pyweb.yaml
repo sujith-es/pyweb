@@ -1,0 +1,39 @@
+pipeline:
+  name: pyweb
+  identifier: pyweb
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: harnessgitconnector
+        repoName: pyweb
+        build: <+input>
+  stages:
+    - stage:
+        name: dev
+        identifier: dev
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushECR
+                  name: BuildAndPushECR_1
+                  identifier: BuildAndPushECR_1
+                  spec:
+                    connectorRef: awsconnector
+                    region: us-east-1
+                    account: "860602188711"
+                    imageName: backend
+                    tags:
+                      - "1"
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
